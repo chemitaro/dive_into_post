@@ -39,11 +39,15 @@ class TeamsController < ApplicationController
   end
 
   def owner_update
-    binding.irb
     @team = Team.find(params[:team_id])
-    @team.update_attribute(:owner_id, params[:user_id])
-    binding.irb
-    redirect_to @team, notice: 'オーナー権限を移動しました'
+    if @team.owner_id == current_user.id
+      @team.update_attribute(:owner_id, params[:user_id])
+      redirect_to @team, notice: 'オーナー権限を移動しました'
+    else
+      redirect_to @team, notice: '権限がありません'
+    end
+    
+
   end
 
   def destroy
