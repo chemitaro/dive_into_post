@@ -16,7 +16,6 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    binding.irb
     redirect_to @team, notice: '編集の権限がありません' unless @team.owner_id == current_user.id
   end
 
