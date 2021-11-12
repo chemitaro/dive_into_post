@@ -42,12 +42,11 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:team_id])
     if @team.owner_id == current_user.id
       @team.update_attribute(:owner_id, params[:user_id])
+      TeamMailer.owner_update_mail(@team, User.find(params[:user_id])).deliver_now
       redirect_to @team, notice: 'オーナー権限を移動しました'
     else
       redirect_to @team, notice: '権限がありません'
     end
-    
-
   end
 
   def destroy
