@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resource :user
   
   resources :teams do
+    patch :owner_update, to: 'teams#owner_update'
     resources :assigns, only: %w(create destroy)
     resources :agendas, shallow: true do
       resources :articles do
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

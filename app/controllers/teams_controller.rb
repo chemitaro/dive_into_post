@@ -38,6 +38,14 @@ class TeamsController < ApplicationController
     end
   end
 
+  def owner_update
+    binding.irb
+    @team = Team.find(params[:team_id])
+    @team.update_attribute(:owner_id, params[:user_id])
+    binding.irb
+    redirect_to @team, notice: 'オーナー権限を移動しました'
+  end
+
   def destroy
     @team.destroy
     redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
