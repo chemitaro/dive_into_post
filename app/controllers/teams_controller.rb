@@ -9,14 +9,16 @@ class TeamsController < ApplicationController
   def show
     @working_team = @team
     change_keep_team(current_user, @team)
-    binding.irb
   end
 
   def new
     @team = Team.new
   end
 
-  def edit; end
+  def edit
+    binding.irb
+    redirect_to @team, notice: '編集の権限がありません' unless @team.owner_id == current_user.id
+  end
 
   def create
     @team = Team.new(team_params)
