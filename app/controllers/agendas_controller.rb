@@ -20,6 +20,12 @@ class AgendasController < ApplicationController
       render :new
     end
   end
+  def destroy
+    @agenda = Agenda.find(params[:id])
+    @agenda.destroy
+    TeamMailer.agenda_delete_mail(@agenda.team.members, @agenda.title).deliver
+    redirect_to dashboard_url, notice: 'アジェンダを削除しました'
+  end
 
   private
 
